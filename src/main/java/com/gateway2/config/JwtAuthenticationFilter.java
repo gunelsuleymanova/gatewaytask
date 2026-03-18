@@ -5,7 +5,6 @@ import org.jspecify.annotations.NullMarked;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,16 +28,16 @@ public class JwtAuthenticationFilter implements GatewayFilter, Ordered {
         // Authorization header-i al
         String authHeader = exchange.getRequest()
                 .getHeaders()
-                .getFirst(HttpHeaders.AUTHORIZATION);
+                .getFirst(HttpHeaders.AUTHORIZATION); // tokeni goturur berarer ile birlikde sdknfsndfsnjjks.jknsdfjlsdknlslgsdlglskglsdafkajakdslgjsgd.asodfdiojfaKLKJSADLKS
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return unauthorized(exchange);
         }
 
-        String token = authHeader.substring(7);
+        String token = authHeader.substring(7); // bearer ignore olunur
 
         try {
-            String id = extractUsername(token);
+            String id = extractUserId(token);
             ServerHttpRequest mutatedRequest = exchange.getRequest()
                     .mutate()
                     .header("user-id", id)
@@ -56,7 +55,24 @@ public class JwtAuthenticationFilter implements GatewayFilter, Ordered {
         }
     }
 
-    private String extractUsername(String token) {
+
+
+    // 5 HEADERDE user-id'
+    // asagi request bodyde gonderilir
+    /// TELEFON
+    /// ELECTRONIC
+
+
+
+
+
+
+
+
+
+
+
+    private String extractUserId(String token) {
         var claims = Jwts.parserBuilder()
                 .setSigningKey(SECRET.getBytes())
                 .build()
